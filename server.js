@@ -58,8 +58,8 @@ db.once("open", function () {
 const Sequelize = require('sequelize');
 let proEnv = process.env;
 const sequelize = new Sequelize(proEnv.JAWSDB_URL, {
-  // host: proEnv.DB_HOST,
-  // dialect: 'mysql',
+  dialect: 'mysql',
+  protocol: 'mysql',
   pool: {
     max: 5,
     min: 0,
