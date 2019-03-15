@@ -57,8 +57,8 @@ db.once("open", function () {
 // SQL DB Connection
 const Sequelize = require('sequelize');
 let proEnv = process.env;
-const sequelize = new Sequelize(proEnv.DB_DATABASE, proEnv.DB_USERNAME, proEnv.DB_PASS, {
-  host: proEnv.DB_HOST,
+const sequelize = new Sequelize(proEnv.JAWSDB_URL, {
+  // host: proEnv.DB_HOST,
   dialect: 'mysql',
   pool: {
     max: 5,
@@ -66,7 +66,16 @@ const sequelize = new Sequelize(proEnv.DB_DATABASE, proEnv.DB_USERNAME, proEnv.D
     acquire: 30000,
     idle: 10000
   },
-});
+}); 
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 // Send every request to the React app
 // Define any API routes before this runs
