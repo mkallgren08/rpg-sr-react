@@ -86,7 +86,7 @@ console.log(process.env.NODE_ENV==='development')
 console.log(typeof process.env.NODE_ENV)
 //const sequelize = estSQLCon(process.env.NODE_ENV)
 
-const sequelize = new Sequelize(process.env.JAWSDB_URL)
+const sequelize = new Sequelize(process.env.JAWSDB_URL, {dialect:'mysql'})
 
 let proEnv = process.env;
 //console.log(`!*!*!*!**!*!*!*!*!*!*!*!*!${sequelize}`)
