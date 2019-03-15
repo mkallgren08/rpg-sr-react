@@ -3,10 +3,13 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const routes = require("./routes");
-const sqlmodels = require('./sqlmodels')
+const sqlmodels = require('./sqlmodels');
+const Sequelize = require('sequelize');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+require('dotenv').config();
 
 // Configure body parser for AJAX requests
 app.use(bodyParser.urlencoded({
@@ -55,27 +58,52 @@ db.once("open", function () {
 
 
 // SQL DB Connection
-const Sequelize = require('sequelize');
-let proEnv = process.env;
-const sequelize = new Sequelize(proEnv.JAWSDB_URL, {
-  dialect: 'mysql',
-  protocol: 'mysql',
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
-}); 
+estSQLCon = (env) => {
+  if (env === 'development') {
+    console.log(`***DEV ENV DETECTED***`)
+    let local_sequelize = new Sequelize(process.env.JAWSDB_URL, {
+      dialect: 'mysql',
+      pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      },
+    });
+  
+    return local_sequelize
+  } else {
+    console.log(`***PROD ENV DETECTED***`)
+    let prod_sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PASS, {
+      dialect: 'mysql',
+      host: process.env.DB_HOST
+    })
+    return prod_sequelize
+  }
+}
+console.log(process.env.NODE_ENV)
+console.log(process.env.NODE_ENV==='development') 
+console.log(typeof process.env.NODE_ENV)
+const sequelize = estSQLCon(process.env.NODE_ENV)
 
+let proEnv = process.env;
+//console.log(`!*!*!*!**!*!*!*!*!*!*!*!*!${sequelize}`)
+//console.log(sequelize) 
 sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+.authenticate()
+.then(() => {
+  console.log('Connection has been established successfully.');
+})
+.catch(err => {
+  console.error('Unable to connect to the database:', err);
+});
+
+  // var sequelize = new Sequelize(process.env.JAWSDB_URL, {
+  //   dialect: 'mysql'
+  // })
+  
+
+
 
 // Send every request to the React app
 // Define any API routes before this runs
