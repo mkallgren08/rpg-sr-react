@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Navbar, Button } from 'react-bootstrap';
-import Callback from '../../Callback/Callback.js';
+//import Callback from '../../Callback/Callback.js';
 import history from '../../history.js';
-import Auth from '../../Auth/Auth.js';
+// import Auth from '../../Auth/Auth.js';
 // import Auth from './Auth/Auth.js';
 import { Col, Container, Row } from "../Grid"
 
@@ -13,7 +13,7 @@ import { Col, Container, Row } from "../Grid"
 
 //const history = require('history')
 
-const auth = new Auth();
+//const auth = new Auth();
 
 
 class Nav2 extends Component {
@@ -69,7 +69,8 @@ class Nav2 extends Component {
             <Col size="md-4">
               <Navbar.Header>
                 <Navbar.Brand>
-                  <a href="#">Auth0 - React</a>
+                  {/* <a href="#">Auth0 - React</a> */}
+                  <span>Auth0-React</span>
                 </Navbar.Brand>
                 <Button
                   bsStyle="primary"

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
-import DeleteBtn from "../../components/DeleteBtn";
-import { Button, Glyphicon, Navbar } from "react-bootstrap";
-import { Col, Row, Container } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
+// import DeleteBtn from "../../components/DeleteBtn";
+// import { Button, Glyphicon, Navbar } from "react-bootstrap";
+import {Row, Container } from "../../components/Grid";
+// import { List, ListItem } from "../../components/List";
 import Nav2 from "../../components/Nav2";
 //import { Input, TextArea, FormBtn } from "../../components/Form";
 
@@ -33,7 +33,7 @@ class MainPage extends Component {
   componentDidMount() {
     //this.loadBiodiversity();
     //this.loadWordToGuess();
-    this.loadTestData();
+    //this.loadTestData();
   };
 
   // code to get biodiversity list
