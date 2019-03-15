@@ -78,7 +78,7 @@ estSQLCon = (env) => {
       dialect: 'mysql',
       host: process.env.DB_HOST
     })
-    return prod_sequelize
+    return prod_sequelize 
   }
 }
 console.log(process.env.NODE_ENV)
