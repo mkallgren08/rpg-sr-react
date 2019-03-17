@@ -36,7 +36,7 @@ mongoose.Promise = global.Promise;
 
 //  'mongodb://localhost/hangman_options' ||
 
-let mongoConnect = 'mongodb://localhost/react-template-with-auth'
+let mongoConnect = process.env.ATLASDB_URL
 // Connect to the Mongo DB
 mongoose.connect(
   mongoConnect, {
@@ -53,7 +53,7 @@ db.on("error", function (error) {
 
 // Once logged in to the db through mongoose, log a success message
 db.once("open", function () {
-  console.log(`Mongoose connection to ${mongoConnect} successful.`);
+  console.log(`Mongoose connection to AtlasDB successful.`);
 });
 
 
@@ -81,9 +81,9 @@ estSQLCon = (env) => {
     return prod_sequelize 
   }
 }
-console.log(process.env.NODE_ENV)
-console.log(process.env.NODE_ENV==='development') 
-console.log(typeof process.env.NODE_ENV)
+// console.log(process.env.NODE_ENV)
+// console.log(process.env.NODE_ENV==='development') 
+// console.log(typeof process.env.NODE_ENV)
 //const sequelize = estSQLCon(process.env.NODE_ENV)
 
 const sequelize = new Sequelize(process.env.JAWSDB_URL, {dialect:'mysql'})
@@ -94,10 +94,10 @@ let proEnv = process.env;
 sequelize
 .authenticate()
 .then(() => {
-  console.log('Connection has been established successfully.');
+  console.log('Sequelize connection to JawsDB has been established successfully.');
 })
 .catch(err => {
-  console.error('Unable to connect to the database:', err);
+  console.error('Unable to connect to the database: ', err);
 });
 
   // var sequelize = new Sequelize(process.env.JAWSDB_URL, {
