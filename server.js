@@ -9,7 +9,7 @@ const Sequelize = require('sequelize');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-require('dotenv').config();
+require('dotenv').config(); 
 
 // Configure body parser for AJAX requests
 app.use(bodyParser.urlencoded({
