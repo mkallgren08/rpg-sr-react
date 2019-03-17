@@ -3,7 +3,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const routes = require("./routes");
-const sqlmodels = require('./sqlmodels');
+//const sqlmodels = require('./sqlmodels');
 const Sequelize = require('sequelize');
 
 const PORT = process.env.PORT || 3001;
