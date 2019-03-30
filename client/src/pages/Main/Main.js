@@ -26,7 +26,7 @@ class MainPage extends Component {
   //   this._handleKeyDown.bind(this)
   // )
   componentWillMount() {
-    console.log(this.props.auth);
+    // console.log(this.props.auth);
   }
 
   // Initial load of saved articles

@@ -1,0 +1,1 @@
+-- Create table for commlinks, decks, rfid tags
