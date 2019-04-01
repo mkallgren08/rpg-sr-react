@@ -29,3 +29,4 @@ add column char_cha int after char_int,
 add column char_edg int after char_cha,
 add column char_essence float after char_edg,
 add column char_init json after char_essence;
+-- Note: remeber that there are three types of inits - basic, matrix, and astral. It will be easier to store these as a JSON object to pull values from
