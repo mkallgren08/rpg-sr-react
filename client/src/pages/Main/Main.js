@@ -36,6 +36,9 @@ class MainPage extends Component {
     //this.loadTestData();
   };
 
+  // API call to check user status
+
+
   // code to get biodiversity list
   loadTestData = () => {
     API.getTestData()
@@ -71,7 +74,7 @@ class MainPage extends Component {
   render() {
 
     return (
-      <Container fluid>
+      <Container fluid className="siteWrapper">
          <Row>
           <Nav2 auth = {this.props.auth}/> 
         </Row> 

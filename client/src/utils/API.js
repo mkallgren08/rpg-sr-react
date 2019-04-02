@@ -1,6 +1,19 @@
 import axios from "axios";
 
 export default {
+  checkUserStatus: function(email) {
+    return axios.get(`/api/users/checkstatus/${email}`)
+  },
+
+
+
+
+
+
+
+
+
+
   //Gets a test case
   getTestData: function(){
     return axios.get("/api/testdata")

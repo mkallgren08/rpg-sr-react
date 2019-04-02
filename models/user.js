@@ -2,63 +2,47 @@ module.exports = function(sequelize, Sequelize) {
  
     var User = sequelize.define('User', {
  
-        userid: {
-            autoIncrement: true,
+        user_id: {
             primaryKey: true,
-            type: Sequelize.INTEGER
+            type: Sequelize.UUID,
+            defaultValue:Sequelize.UUIDV1
         },
  
-        firstname: {
+        user_firstname: {
             type: Sequelize.STRING,
             notEmpty: true
         },
  
-        lastname: {
+        user_lastname: {
             type: Sequelize.STRING,
             notEmpty: true
         },
  
-        username: {
+        user_about: {
             type: Sequelize.TEXT
         },
  
-        about: {
-            type: Sequelize.TEXT
-        },
- 
-        email: {
+        user_email: {
             type: Sequelize.STRING,
             validate: {
                 isEmail: true
-            }
-        },
- 
-        password: {
-            type: Sequelize.STRING,
+            },
             allowNull: false
         },
- 
-        last_login: {
-            type: Sequelize.DATE
-        },
- 
-        status: {
-            type: Sequelize.ENUM('active', 'inactive'),
-            defaultValue: 'active'
-        },
 
-        administrator: {
-            type: Sequelize.BOOLEAN,
+        user_role: {
+            type: Sequelize.STRING,
             allowNull: false,
-            defaultValue: false
+            defaultValue: 'user'
         }
- 
- 
+    },{
+      tableName: 'Users',
+      timestamps:false
     });
 
-    User.associate = function(models) {
-      models.User.hasMany(models.CharacterBase);
-    };
+    // User.associate = function(models) {
+    //   models.User.hasMany(models.CharacterBase);
+    // };
  
     return User;
  

@@ -11,6 +11,7 @@ import history from './history.js';
 import Main from "./pages/Main";
 import TestPage from "./pages/TestPage"
 import Profile from "./pages/Profile"
+import CreateProfile from "./pages/CreateProfile"
 
 
 const auth = new Auth();
@@ -60,7 +61,7 @@ export const makeMainRoutes = () => {
         <Route exact path={"/"} render={(props) => <Main auth={auth} {...props} />} />
         <Route exact path={"/home"} render={(props) => <Main auth={auth} {...props} />} />
         <Route exact path={"/test"} render={(props) => <TestPage auth={auth} {...props} />} />
-        {/* <Route exact path={"/testdata"} render={(props) => <Main auth={auth} {...props} />} /> */}
+        <Route exact path={"/createProfile"} render={(props) => <CreateProfile auth={auth} {...props} />} />
         {/* <Route exact path={"/testdata"} render={(props) => <TestPage auth={auth} {...props} />} /> */}
         <Route exact path={"/callback"} render={(props) => {
           handleAuthentication(props);

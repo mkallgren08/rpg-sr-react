@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Button } from 'react-bootstrap';
+import API from "../../utils/API";
 //import Callback from '../../Callback/Callback.js';
 import history from '../../history.js';
 // import Auth from '../../Auth/Auth.js';
@@ -21,6 +22,10 @@ class Nav2 extends Component {
     profile: {},
   }
 
+  componentWillMount() {
+    //console.log(isAuthenticated)
+    //console.log(history.replace)
+  }
 
   componentDidMount() {
     //console.log('user profile: ' + JSON.stringify(this.state.profile, 2, null));
@@ -28,26 +33,13 @@ class Nav2 extends Component {
     // console.log('this.history: ' + this.history)
     // console.log(history.replace)
     // console.log('this.props.history: ' + this.props.history)
+    //console.log(this.state)
+    this.loadProfile();
   }
 
-  componentWillMount() {
-    const { userProfile, getProfile, isAuthenticated } = this.props.auth;
-    if (isAuthenticated()) {
-      if (!userProfile) {
-        getProfile((err, profile) => {
-          this.setState({ profile });
-          console.log('user profile: ' + JSON.stringify(this.state.profile, 2, null));
-        });
-      } else {
-        this.setState({ profile: userProfile });
-      }
-    }
-    //console.log(isAuthenticated)
-  }
-
-  goTo(route) {
+  goTo(route, state) {
     //this.props.history.replace(`/${route}`)
-    history.replace(`/${route}`)
+    history.replace(`/${route}`, state)
   }
 
   login() {
@@ -56,6 +48,36 @@ class Nav2 extends Component {
 
   logout() {
     this.props.auth.logout();
+  }
+
+  checkStatus (email) {
+    API.checkUserStatus(email).then(
+      res => {
+        //console.log(res.data[0])
+        if(!res.data[0]){
+          console.log("should route to createProfile page...")
+          this.goTo('createProfile', this.state.profile)
+        }
+      }
+    )
+  }
+
+  loadProfile () {
+    const { userProfile, getProfile, isAuthenticated } = this.props.auth;
+    if (isAuthenticated()) {
+      if (!userProfile) {
+        getProfile((err, profile) => {
+          this.setState({ profile:profile},()=>{
+            this.checkStatus(this.state.profile.email + '2222')
+          });
+          //console.log('user profile: ' + JSON.stringify(this.state.profile, 2, null));
+        });
+      } else {
+        this.setState({ profile: userProfile },()=>{
+          this.checkStatus(this.state.profile.email + '2222')
+        });
+      }
+    }
   }
 
   render() {
@@ -75,7 +97,7 @@ class Nav2 extends Component {
                 <Button
                   bsStyle="primary"
                   className="btn-margin"
-                  onClick={this.goTo.bind(this, 'home')}
+                  onClick={this.goTo.bind(this, 'home', {})}
                 >
                   Home
             </Button>
@@ -84,7 +106,7 @@ class Nav2 extends Component {
                     <Button
                       bsStyle="primary"
                       className="btn-margin"
-                      onClick={this.goTo.bind(this, 'profile')}
+                      onClick={this.goTo.bind(this, 'profile', {})}
                     >
                       Profile
                   </Button>

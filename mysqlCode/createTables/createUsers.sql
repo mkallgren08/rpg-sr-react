@@ -1,5 +1,5 @@
 use crhdybcsctttyd85;
-create table if not exists USERS (
+create table if not exists Users (
   user_id varchar(36) not null primary key,
   user_email varchar(60) not null,
   user_role varchar(20) not null,
@@ -11,3 +11,9 @@ create table if not exists USERS (
 
 alter table USERS
 add constraint unique_email unique key(user_email);
+
+alter table USERS
+add column newuser int after user_about;
+
+use crhdybcsctttyd85;
+rename table USERS to Users;
