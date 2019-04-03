@@ -11,11 +11,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   checkStatus: function (req, res) {
-    // db.User
-    //   .find({where: {user_email:req.params.email}})
-    //   .sort({ name: -1 })
-    //   .then(dbModel => res.json(dbModel))
-    //   .catch(err => res.status(422).json(err));
     console.log(db.User.findAll)
     db.User.findAll({
       where: {user_email:req.params.email}
@@ -27,12 +22,13 @@ module.exports = {
   //     .then(dbModel => res.json(dbModel))
   //     .catch(err => res.status(422).json(err));
   // },
-  // create: function (req, res) {
-  //   db.TestData
-  //     .create(req.body)
-  //     .then(dbModel => res.json(dbModel))
-  //     .catch(err => res.status(422).json(err));
-  // },
+  create: function (req, res) {
+    console.log(req.body)
+    db.User
+      .create(req.body)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
   // update: function (req, res) {
   //   db.TestData
   //     .findOneAndUpdate({ _id: req.params.id }, req.body)

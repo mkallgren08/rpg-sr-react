@@ -4,6 +4,9 @@ export default {
   checkUserStatus: function(email) {
     return axios.get(`/api/users/checkstatus/${email}`)
   },
+  createUser: function(userData){
+    return axios.post(`api/users/`, userData)
+  },
 
 
 

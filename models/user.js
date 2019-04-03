@@ -30,6 +30,11 @@ module.exports = function(sequelize, Sequelize) {
             allowNull: false
         },
 
+        user_nickname: {
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        
         user_role: {
             type: Sequelize.STRING,
             allowNull: false,

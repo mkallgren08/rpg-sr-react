@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 // import Jumbotron from "../../components/Jumbotron";
-//import API from "../../utils/API";
+import API from "../../utils/API";
 // import DeleteBtn from "../../components/DeleteBtn";
 //import { Button, Glyphicon, Navbar } from "react-bootstrap";
 import {Container } from "../../components/Grid";
@@ -28,32 +28,11 @@ class CreateProfile extends Component {
     // this.loadProfile();
   }
 
-  // Loads user profile from Auth0 db
-  // loadProfile () {
-  //   const { userProfile, getProfile } = this.props.auth;
-  //   if (!userProfile) {
-  //     getProfile((err, profile) => {
-  //       this.setState({ profile: profile}, () => {
-  //         console.log(this.state)
-  //       });
-  //     });
-  //   } else {
-  //     this.setState({ profile: userProfile }, () => {
-  //       console.log(this.state)
-  //     });
-  //   }
-  // };
-
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({
       [name]: value
     });
-  };
-
-  handleFormSubmit = event => {
-    event.preventDefault();
-    console.log("Form submission heard!")
   };
 
   render (){
@@ -64,7 +43,7 @@ class CreateProfile extends Component {
       <Container fluid>
         <Nav2 auth = {this.props.auth} />
         <h1>CREATE PROFILE PAGE</h1>
-        <CreateProfileForm profile={profile}/>
+        <CreateProfileForm profile={profile} API = {API}/>
       </Container>
       
     )
