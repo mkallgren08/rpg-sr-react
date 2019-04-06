@@ -43,7 +43,7 @@ class CreateProfile extends Component {
       <Container fluid>
         <Nav2 auth = {this.props.auth} />
         <h1>CREATE PROFILE PAGE</h1>
-        <CreateProfileForm profile={profile} API = {API}/>
+        <CreateProfileForm profile={profile} API = {API} auth={this.props.auth}/>
       </Container>
       
     )

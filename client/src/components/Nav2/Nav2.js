@@ -22,9 +22,9 @@ class Nav2 extends Component {
     profile: {},
   }
 
-  componentWillMount() {
-    //console.log(isAuthenticated)
-    //console.log(history.replace)
+  constructor(props){
+    super(props);
+    //this.getPrevLocation();
   }
 
   componentDidMount() {
@@ -34,6 +34,7 @@ class Nav2 extends Component {
     // console.log(history.replace)
     // console.log('this.props.history: ' + this.props.history)
     //console.log(this.state)
+    this.setCurrentLocation();
     this.loadProfile();
   }
 
@@ -50,31 +51,52 @@ class Nav2 extends Component {
     this.props.auth.logout();
   }
 
-  checkStatus (email) {
+  // getPrevLocation(){
+  //   let prevLoc = localStorage.getItem('sr_track_prevLoc');
+  //   console.log(prevLoc);
+  // }
+
+  setCurrentLocation(){
+    // set current location in local storage to handle 
+    // login reoruting
+    let curLoc=history.location.pathname;
+    // set the current page as the previous location (so that 
+    // the next page navigation can refer to the *current page
+    // as the previous one)
+    localStorage.setItem('sr_track_prevLoc',curLoc);
+    console.log(curLoc)
+  }
+
+  checkStatus(email) {
     API.checkUserStatus(email).then(
       res => {
-        //console.log(res.data[0])
-        if(!res.data[0]){
+        console.log(res.data)
+        if (res.data.length === 0) {
           console.log("should route to createProfile page...")
           this.goTo('createProfile', this.state.profile)
+        } else {
+          console.log('user found! loading their profile into the state')
+          this.setState({profile:res.data[0]},()=>console.log(this.state.profile))
         }
       }
     )
   }
 
-  loadProfile () {
+  loadProfile() {
     const { userProfile, getProfile, isAuthenticated } = this.props.auth;
     if (isAuthenticated()) {
       if (!userProfile) {
+        console.log('need to load Auth0 profile')
         getProfile((err, profile) => {
-          this.setState({ profile:profile},()=>{
-            this.checkStatus(this.state.profile.email + '2222')
+          this.setState({ profile: profile }, () => {
+            this.checkStatus(this.state.profile.email)
           });
           //console.log('user profile: ' + JSON.stringify(this.state.profile, 2, null));
         });
       } else {
-        this.setState({ profile: userProfile },()=>{
-          this.checkStatus(this.state.profile.email + '2222')
+        console.log('Auth0 profile loaded')
+        this.setState({ profile: userProfile }, () => {
+          this.checkStatus(this.state.profile.email)
         });
       }
     }
@@ -109,6 +131,17 @@ class Nav2 extends Component {
                       onClick={this.goTo.bind(this, 'profile', {})}
                     >
                       Profile
+                  </Button>
+                  )
+                }
+                {
+                  isAuthenticated() && (
+                    <Button
+                      bsStyle="primary"
+                      className="btn-margin"
+                      onClick={this.goTo.bind(this, 'createProfile', profile)}
+                    >
+                      Create Profile
                   </Button>
                   )
                 }

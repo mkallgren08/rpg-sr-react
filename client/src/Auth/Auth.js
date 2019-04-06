@@ -19,13 +19,24 @@ export default class Auth {
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.getAccessToken = this.getAccessToken.bind(this);
     this.getProfile = this.getProfile.bind(this);
+    this.getPrevLocation();
   }
 
   login() {
     this.auth0.authorize();
   }
 
+  relogin(packet, func) {
+    this.auth0.login(packet, (res)=>func(res))
+  }
+
+  getPrevLocation(){
+    let prevLoc = localStorage.getItem('sr_track_prevLoc');
+    console.log(prevLoc);
+  }
+
   handleAuthentication() {
+    console.log(history)
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);

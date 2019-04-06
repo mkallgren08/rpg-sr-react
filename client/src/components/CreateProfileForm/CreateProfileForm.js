@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Labelled, TextArea, FormBtn } from "../Form";
 import { Container } from "../Grid";
+
 //import {FormGroup} from "../Form/FormGroup";
 // import {TextArea} from "../Form"
 import FormCheckModal from "../Modal"
@@ -28,25 +29,45 @@ class CreateProfileForm extends Component {
   }
 
   componentDidMount() {
-    let initNicknm = this.props.profile.email.split('@')
-    initNicknm = initNicknm[0]
+    let initNicknm ='';
+    if(this.props.profile.email){
+      initNicknm = this.props.profile.email.split('@')
+      initNicknm = initNicknm[0]
+    } else {
+      initNicknm = this.props.profile.user_nickname
+    }
+    
+    
     //console.log(initNicknm)
 
     this.setState({
-      email: this.props.profile.email,
-      firstname: this.props.profile.given_name ? this.props.profile.given_name : '',
-      lastname: this.props.profile.family_name ? this.props.profile.family_name : '',
-      nickname: initNicknm
+      email: this.props.profile.email ? this.props.profile.email: this.props.profile.user_email,
+      firstname: this.props.profile.given_name ? this.props.profile.given_name: this.props.profile.user_firstname,
+      lastname: this.props.profile.family_name ? this.props.profile.family_name: this.props.profile.user_lastname,
+      nickname: initNicknm,
+      about: this.props.profile.user_about ? this.props.profile.user_about: ''
     }, () => {
       //console.log(this.state)
     })
+  }
+
+  testLogin() {
+    let packet={
+      realm: 'Username-Password-Authentication',
+      email: 'mk962@cornell.edu',
+      password: 'armageddon3M41'
+    }
+    this.props.auth.relogin(packet,(res)=>{
+      console.log("Test!")
+      console.log(res)
+    });
   }
 
   validateEntries () {
     let st=this.state;
     if(st.firstname !== '' && st.lastname !== '' 
        && st.emailCheck && st.nickname !=='' 
-       && st.email === this.props.profile.email){
+       && (st.email === this.props.profile.email || st.email === this.props.profile.user_email)){
          console.log('entries are valid!')
         this.setState({validEntries:true})
     } else {this.setState({validEntries:false})}
@@ -72,7 +93,7 @@ class CreateProfileForm extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     console.log("Form submission heard!")
-    this.handleShow();
+    //this.handleShow();
     let st=this.state;
     let packet = {
       user_firstname: st.firstname,
@@ -83,11 +104,16 @@ class CreateProfileForm extends Component {
     }
 
     console.log(packet);
-    this.props.API.createUser(packet).then(
-      res => {
-        console.log(res)
-      }
-    )
+    if(this.props.create){
+      this.props.API.createUser(packet).then(
+        res => {
+          console.log(res)
+        }
+      )
+    } else {
+      // future code for submitting a profile edit
+    }
+  
   };
 
   handleClose() {
@@ -102,6 +128,7 @@ class CreateProfileForm extends Component {
     const st = this.state
     return (
       <Container fluid>
+      <button onClick={this.testLogin.bind(this)}>Test Reauth</button>
         <form>
           <div className="form-group">
             <Labelled
