@@ -3,8 +3,8 @@ const userController = require("../../controllers/usermanagementController");
 
 // All entries on this page match with "/api/users/"
 
-// Matches with "/api/users/checkstatus"
-router.route("/checkstatus/:email")
+// Matches with "/api/users/:email"
+router.route("/:email")
   .get(userController.checkStatus)
 
 // Matches with "/api/users/"

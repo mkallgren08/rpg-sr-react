@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export default {
-  checkUserStatus: function(email) {
-    return axios.get(`/api/users/checkstatus/${email}`)
+  getUser: function(email) {
+    return axios.get(`/api/users/${email}`)
   },
   createUser: function(userData){
     return axios.post(`api/users/`, userData)

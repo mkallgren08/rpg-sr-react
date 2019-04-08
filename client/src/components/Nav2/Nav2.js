@@ -67,12 +67,12 @@ class Nav2 extends Component {
     console.log(curLoc)
   }
 
-  checkStatus(email) {
-    API.checkUserStatus(email).then(
+  getUser(email) {
+    API.getUser(email).then(
       res => {
         console.log(res.data)
         if (res.data.length === 0) {
-          console.log("should route to createProfile page...")
+          console.log("No user found; should route to createProfile page...")
           this.goTo('createProfile', this.state.profile)
         } else {
           console.log('user found! loading their profile into the state')
@@ -89,14 +89,14 @@ class Nav2 extends Component {
         console.log('need to load Auth0 profile')
         getProfile((err, profile) => {
           this.setState({ profile: profile }, () => {
-            this.checkStatus(this.state.profile.email)
+            this.getUser(this.state.profile.email)
           });
           //console.log('user profile: ' + JSON.stringify(this.state.profile, 2, null));
         });
       } else {
         console.log('Auth0 profile loaded')
         this.setState({ profile: userProfile }, () => {
-          this.checkStatus(this.state.profile.email)
+          this.getUser(this.state.profile.email)
         });
       }
     }

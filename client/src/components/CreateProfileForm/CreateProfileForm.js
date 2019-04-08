@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Labelled, TextArea, FormBtn } from "../Form";
 import { Container } from "../Grid";
 
+
 //import {FormGroup} from "../Form/FormGroup";
 // import {TextArea} from "../Form"
 import FormCheckModal from "../Modal"
@@ -29,33 +30,82 @@ class CreateProfileForm extends Component {
   }
 
   componentDidMount() {
+    this.loadProfile();
+    console.log(this.props.auth)
+  }
+
+  filloutProfile(){
+    console.log('loading profile in the form...')
     let initNicknm ='';
-    if(this.props.profile.email){
-      initNicknm = this.props.profile.email.split('@')
-      initNicknm = initNicknm[0]
+    let profile;
+    if(this.state.profile){
+      profile = this.state.profile
     } else {
-      initNicknm = this.props.profile.user_nickname
+      profile = this.props.profile
     }
     
-    
-    //console.log(initNicknm)
+      if(profile.email){
+        initNicknm = profile.email.split('@')
+        initNicknm = initNicknm[0]
+      } else {
+        initNicknm = profile.user_nickname
+      }
 
-    this.setState({
-      email: this.props.profile.email ? this.props.profile.email: this.props.profile.user_email,
-      firstname: this.props.profile.given_name ? this.props.profile.given_name: this.props.profile.user_firstname,
-      lastname: this.props.profile.family_name ? this.props.profile.family_name: this.props.profile.user_lastname,
-      nickname: initNicknm,
-      about: this.props.profile.user_about ? this.props.profile.user_about: ''
-    }, () => {
-      //console.log(this.state)
-    })
+      this.setState({
+        email: profile.email ? profile.email: profile.user_email,
+        firstname: profile.given_name ? profile.given_name: profile.user_firstname,
+        lastname: profile.family_name ? profile.family_name: profile.user_lastname,
+        nickname: initNicknm,
+        about: profile.user_about ? profile.user_about: ''
+      }, () => {
+        //console.log(this.state)
+      })
+    
+  }
+
+  getUser(email) {
+    this.props.API.getUser(email).then(
+      res => {
+        console.log(res.data)
+        if (res.data.length === 0) {
+          console.log("No user found; parse out user data into the form for profile creation...")
+          this.filloutProfile();
+        } else {
+          console.log('user found! loading their profile into the state')
+          this.setState({profile:res.data[0]},()=>{
+            console.log(this.state.profile);
+            this.filloutProfile();
+          })
+        }
+      }
+    )
+  }
+
+  loadProfile() {
+    const { userProfile, getProfile, isAuthenticated } = this.props.auth;
+    if (isAuthenticated()) {
+      if (!userProfile) {
+        console.log('need to load Auth0 profile')
+        getProfile((err, profile) => {
+          this.setState({ profile: profile }, () => {
+            this.getUser(this.state.profile.email)
+          });
+          //console.log('user profile: ' + JSON.stringify(this.state.profile, 2, null));
+        });
+      } else {
+        console.log('Auth0 profile loaded')
+        this.setState({ profile: userProfile }, () => {
+          this.getUser(this.state.profile.email)
+        });
+      }
+    }
   }
 
   testLogin() {
     let packet={
       realm: 'Username-Password-Authentication',
-      email: 'mk962@cornell.edu',
-      password: 'armageddon3M41'
+      email: '',
+      password: ''
     }
     this.props.auth.relogin(packet,(res)=>{
       console.log("Test!")
@@ -128,8 +178,8 @@ class CreateProfileForm extends Component {
     const st = this.state
     return (
       <Container fluid>
-      <button onClick={this.testLogin.bind(this)}>Test Reauth</button>
         <form>
+          <button onClick={this.props.auth.renewSession.bind(this)}>Test session recheck</button>
           <div className="form-group">
             <Labelled
               id="email"

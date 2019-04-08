@@ -19,6 +19,7 @@ export default class Auth {
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.getAccessToken = this.getAccessToken.bind(this);
     this.getProfile = this.getProfile.bind(this);
+    this.renewSession = this.renewSession.bind(this);
     this.getPrevLocation();
   }
 
@@ -26,6 +27,7 @@ export default class Auth {
     this.auth0.authorize();
   }
 
+  // Custom test to handle reauthorization within the app
   relogin(packet, func) {
     this.auth0.login(packet, (res)=>func(res))
   }
@@ -33,13 +35,15 @@ export default class Auth {
   getPrevLocation(){
     let prevLoc = localStorage.getItem('sr_track_prevLoc');
     console.log(prevLoc);
+    return prevLoc
   }
 
   handleAuthentication() {
-    console.log(history)
+    console.log('handle auth is being called')
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
+        //history.replace(this.getPrevLocation());
         history.replace('/home');
       } else if (err) {
         history.replace('/home');
@@ -49,9 +53,26 @@ export default class Auth {
     });
   }
 
+  renewSession(){
+    console.log('renew session is being called')
+    this.auth0.checkSession({},(err,authResult)=>{
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        console.log('Successful renewal!')
+        this.setSession(authResult);
+      } else if (err) {
+        this.logout();
+        console.log(err);
+        alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
+      }
+    })
+
+  }
+
   setSession(authResult) {
     // Set the time that the access token will expire at
-    let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    // Default value is 72 milliseconds - multiply by 1000 to get 2 hours
+    console.log('setting session')
+    let expiresAt = JSON.stringify((authResult.expiresIn*1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
@@ -91,6 +112,7 @@ export default class Auth {
     // Check whether the current time is past the 
     // access token's expiry time
     let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+
     return new Date().getTime() < expiresAt;
   }
 }
