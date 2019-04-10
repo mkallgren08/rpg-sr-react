@@ -3,8 +3,7 @@ import { Navbar, Button } from 'react-bootstrap';
 import API from "../../utils/API";
 //import Callback from '../../Callback/Callback.js';
 import history from '../../history.js';
-// import Auth from '../../Auth/Auth.js';
-// import Auth from './Auth/Auth.js';
+import SessionChecker from '../../Auth/SessionChecker';
 import { Col, Container, Row } from "../Grid"
 
 
@@ -20,22 +19,20 @@ import { Col, Container, Row } from "../Grid"
 class Nav2 extends Component {
   state = {
     profile: {},
+    intervalCheck: () => { },
+    nearTimeout: false
   }
 
-  constructor(props){
+  constructor(props) {
     super(props);
     //this.getPrevLocation();
+    //this.checkCurrentSession = this.checkCurrentSession.bind(this)
   }
 
   componentDidMount() {
-    //console.log('user profile: ' + JSON.stringify(this.state.profile, 2, null));
-    // console.log('History object: ' + JSON.stringify(history, 2, null));
-    // console.log('this.history: ' + this.history)
-    // console.log(history.replace)
-    // console.log('this.props.history: ' + this.props.history)
-    //console.log(this.state)
     this.setCurrentLocation();
     this.loadProfile();
+    // this.setSessionCheck();
   }
 
   goTo(route, state) {
@@ -50,20 +47,19 @@ class Nav2 extends Component {
   logout() {
     this.props.auth.logout();
   }
-
   // getPrevLocation(){
   //   let prevLoc = localStorage.getItem('sr_track_prevLoc');
   //   console.log(prevLoc);
   // }
 
-  setCurrentLocation(){
+  setCurrentLocation() {
     // set current location in local storage to handle 
     // login reoruting
-    let curLoc=history.location.pathname;
+    let curLoc = history.location.pathname;
     // set the current page as the previous location (so that 
     // the next page navigation can refer to the *current page
     // as the previous one)
-    localStorage.setItem('sr_track_prevLoc',curLoc);
+    localStorage.setItem('sr_track_prevLoc', curLoc);
     console.log(curLoc)
   }
 
@@ -76,7 +72,7 @@ class Nav2 extends Component {
           this.goTo('createProfile', this.state.profile)
         } else {
           console.log('user found! loading their profile into the state')
-          this.setState({profile:res.data[0]},()=>console.log(this.state.profile))
+          this.setState({ profile: res.data[0] }, () => console.log(this.state.profile))
         }
       }
     )
@@ -108,6 +104,7 @@ class Nav2 extends Component {
 
     return (
       <Container fluid>
+        <SessionChecker auth = {this.props.auth}/>
         <Navbar fluid>
           <Row>
             <Col size="md-4">

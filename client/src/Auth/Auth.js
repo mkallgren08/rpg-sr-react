@@ -20,6 +20,7 @@ export default class Auth {
     this.getAccessToken = this.getAccessToken.bind(this);
     this.getProfile = this.getProfile.bind(this);
     this.renewSession = this.renewSession.bind(this);
+    this.checkCurrentSession = this.checkCurrentSession.bind(this)
     this.getPrevLocation();
   }
 
@@ -56,6 +57,7 @@ export default class Auth {
   renewSession(){
     console.log('renew session is being called')
     this.auth0.checkSession({},(err,authResult)=>{
+      console.log(authResult)
       if (authResult && authResult.accessToken && authResult.idToken) {
         console.log('Successful renewal!')
         this.setSession(authResult);
@@ -70,15 +72,38 @@ export default class Auth {
 
   setSession(authResult) {
     // Set the time that the access token will expire at
-    // Default value is 72 milliseconds - multiply by 1000 to get 2 hours
+    // Default value is 7200 milliseconds - 7.2 seconds - multiply by 1000 to get 2 hours
     console.log('setting session')
-    let expiresAt = JSON.stringify((authResult.expiresIn*1000) + new Date().getTime());
+    let expiresAt = JSON.stringify((authResult.expiresIn*20) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    //this.checkSessInterval;
+
+    console.log(this.getPrevLocation())
     // navigate to the home route
-    history.replace('/home');
+    history.replace(`${this.getPrevLocation()}`);
   }
+
+
+  // Moved this function into the navbar since the navbar will be present on every page
+  checkCurrentSession(renewFunc){
+    //console.log(renewFunc)
+    let timeLeft = parseInt(localStorage.getItem('expires_at')) - new Date().getTime();
+    if(timeLeft <= 0 || isNaN(timeLeft)){
+      console.log('Should logout')
+      //this.logout();
+    } else if (timeLeft <= 60000){
+      console.log('expiring soon!', timeLeft)
+      // console.log('triggering renew function')
+      return true;
+    } else {
+      return false
+    }
+    console.log(timeLeft)
+  }
+
+  //checkSessInterval = setInterval(()=>{this.checkCurrentSession(this.renewSession)}, 3000) // Checks session status every 2 minutes
 
   getAccessToken() {
     const accessToken = localStorage.getItem('access_token');
@@ -100,6 +125,7 @@ export default class Auth {
 
   logout() {
     // Clear access token and ID token from local storage
+    clearInterval(this.checkSessInterval)
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');

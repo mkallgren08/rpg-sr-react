@@ -22,6 +22,12 @@ const handleAuthentication = ({ location }) => {
   }
 }
 
+// const getPrevLocation= () => {
+//   let prevLoc = localStorage.getItem('sr_track_prevLoc');
+//   console.log(prevLoc);
+//   return prevLoc
+// }
+
 // const renderMergedProps = (component, ...rest) => {
 //   const finalProps = Object.assign({}, ...rest);
 //   return (

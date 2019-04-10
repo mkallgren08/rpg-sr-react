@@ -5,7 +5,7 @@ import { Container } from "../Grid";
 
 //import {FormGroup} from "../Form/FormGroup";
 // import {TextArea} from "../Form"
-import FormCheckModal from "../Modal"
+import FormCheckModal from "../Modal/FormCheck"
 import "./CreateProfileForm.css"
 
 class CreateProfileForm extends Component {
