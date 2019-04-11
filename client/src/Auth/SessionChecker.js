@@ -66,13 +66,15 @@ class SessionChecker extends Component{
   }
 
   logout() {
-    clearInterval(this.sessCheck)
+    clearInterval(this.sessCheck);
+    this.midIntActive = false
     this.handleClose();
     this.props.auth.logout();
   }
 
   renewSession(){
     this.handleClose();
+    this.midIntActive = false
     clearInterval(this.sessCheck)
     this.sessCheck = setInterval(
       ()=>{this.checkCurrentSession()}, this.slowTime

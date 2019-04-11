@@ -2,17 +2,13 @@ import history from '../history.js';
 import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0-variables';
 
-export default class Auth {
-  auth0 = new auth0.WebAuth({
-    domain: AUTH_CONFIG.domain,
-    clientID: AUTH_CONFIG.clientId,
-    redirectUri: AUTH_CONFIG.callbackUrl,
-    audience: `https://${AUTH_CONFIG.domain}/userinfo`,
-    responseType: 'token id_token',
-    scope: 'openid profile email' //*Need to include 'email' to get user email address!
-  });
+let redirectUri = ''
 
+export default class Auth {
+  env = 'PROD'
   constructor() {
+    //this.checkEnv();
+
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
@@ -22,6 +18,45 @@ export default class Auth {
     this.renewSession = this.renewSession.bind(this);
     this.checkCurrentSession = this.checkCurrentSession.bind(this)
     this.getPrevLocation();
+  }
+
+  // auth0 = new auth0.WebAuth({
+  //   domain: AUTH_CONFIG.domain,
+  //   clientID: AUTH_CONFIG.clientId,
+  //   redirectUri: redirectUri,
+  //   audience: `https://${AUTH_CONFIG.domain}/userinfo`,
+  //   responseType: 'token id_token',
+  //   scope: 'openid profile email' //*Need to include 'email' to get user email address!
+  // });
+
+  auth0 = this.checkEnv();
+
+  // This whole function has to be run to set up separate dev and prod callback urls
+  checkEnv(){
+    let env = 'PROD'
+    if (window.location.href.indexOf('localhost') > -1){
+      env = 'DEV'
+    }
+
+    if (env === 'PROD'){
+      redirectUri = AUTH_CONFIG.callbackUrlPROD
+    } else {
+      redirectUri = AUTH_CONFIG.callbackUrlDEV
+    }
+
+    let newAuth0 = new auth0.WebAuth({
+      domain: AUTH_CONFIG.domain,
+      clientID: AUTH_CONFIG.clientId,
+      redirectUri: redirectUri,
+      audience: `https://${AUTH_CONFIG.domain}/userinfo`,
+      responseType: 'token id_token',
+      scope: 'openid profile email' //*Need to include 'email' to get user email address!
+    });
+
+    console.log(env, redirectUri)
+    console.log(newAuth0)
+
+    return newAuth0
   }
 
   login() {
