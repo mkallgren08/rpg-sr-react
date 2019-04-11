@@ -24,7 +24,7 @@ class SessionChecker extends Component{
   quickTime = 1000;
 
   componentDidMount(){
-    console.log(this.props);
+    //console.log(this.props);
     console.log(localStorage.getItem('expires_at'))
 
     // Checks if user has been logged in before setting an interval
