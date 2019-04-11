@@ -18,7 +18,9 @@ class SessionChecker extends Component{
     }
   }
 
-  slowTime = 3000;
+  midIntActive = false
+  slowTime = 600000;
+  midTime = 60000;
   quickTime = 1000;
 
   componentDidMount(){
@@ -85,20 +87,34 @@ class SessionChecker extends Component{
     let timeLeft = parseInt(localStorage.getItem('expires_at'), 10) - new Date().getTime();
     let minLeft = (timeLeft/1000/60).toFixed(2)
     let secLeft = (timeLeft/1000).toFixed(0)
+    // The first option handles erroneous logouts 
     if (isNaN(timeLeft)){
       console.log('Not logged in')
       clearInterval(this.sessCheck)
       this.handleClose();
-    }else if(timeLeft <= 0){
+    }
+    // If the user has forgotten to lougout and left their browser open, this option logs them out
+    else if(timeLeft <= 0){
       console.log('Should logout')
       this.logout();
-    } else if (timeLeft <= 120000){
+    } 
+    // If time is less than 15 minutes, the interval should switch from 10 min to one min
+    // and the midIntActive flag should flip from false to true
+    else if (timeLeft <= 900000 && !this.midIntActive){
+      console.log('Less than 15 minutes left; switching from a 10 min to 1 minute interval check')
+      clearInterval(this.sessCheck);
+      this.sessCheck = setInterval(
+        ()=>{this.checkCurrentSession()}, this.midTime
+      )
+    } 
+    // If the time left is less than 2 minutes, the interval drops from 1 min to 1 second,
+    // and the renewSession modal is activated
+    else if (timeLeft <= 120000){
       console.log(`Expiring soon! Expiring in ${secLeft} seconds.`)
       if(!this.state.show){clearInterval(this.sessCheck); this.handleShow();}
       this.setState({secLeft: secLeft})
-     
     } else {
-      console.log(`There are ${minLeft} minutes left before token expiration `)
+      console.log(`There are ${minLeft} minutes left before token expiration; this check will occur again in either 10 minutes or 1 minute `)
     
     }
     // console.log(timeLeft)
