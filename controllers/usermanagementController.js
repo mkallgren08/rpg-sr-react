@@ -18,7 +18,7 @@ module.exports = {
   },
   // findById: function (req, res) {
   //   db.TestData
-  //     .findById(req.params.id)
+  //     .findByPk(req.params.id)
   //     .then(dbModel => res.json(dbModel))
   //     .catch(err => res.status(422).json(err));
   // },
@@ -37,7 +37,7 @@ module.exports = {
   // },
   // remove: function (req, res) {
   //   db.TestData
-  //     .findById({ _id: req.params.id })
+  //     .findByPk({ _id: req.params.id })
   //     .then(dbModel => dbModel.remove())
   //     .then(dbModel => res.json(dbModel))
   //     .catch(err => res.status(422).json(err));

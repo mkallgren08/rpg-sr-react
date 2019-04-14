@@ -4,6 +4,7 @@
   "description": "hangman game written using MERN stack",
   "main": "server.js",
   "scripts": {
+    "devserver": "nodemon server.js",
     "server": "node server.js",
     "client": "cd client && npm run start",
     "start": "concurrently \"nodemon server.js\" \"npm run client\"",
@@ -16,7 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^3.5.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.18.11"
   },
   "dependencies": {
     "auth0-js": "^9.0.2",

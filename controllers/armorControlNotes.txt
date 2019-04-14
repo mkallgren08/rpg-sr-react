@@ -1,0 +1,41 @@
+    //console.log(db.User.findAll)
+    // let finalRes = {
+    //   armor: ['empty'],
+    //   armormods: ['empty'],
+    //   armoraddons: ['empty']
+    // }
+
+    // let ready = false;
+    // let count = 0;
+
+    // db.Armor
+    //   .findAll()
+    //   .then(dbModel => finalRes.armor = dbModel)
+    //   .catch(err => res.status(422).json(err));
+
+    // db.ArmorMods
+    //   .findAll()
+    //   .then(dbModel => finalRes.armormods = dbModel)
+    //   .catch(err => res.status(422).json(err));
+
+    // db.ArmorAddOns
+    //   .findAll()
+    //   .then(dbModel => finalRes.armormods = dbModel)
+    //   .catch(err => res.status(422).json(err));
+
+    console.log(this)
+
+    // while (!ready) {
+    //   if (count < 100) {
+    //     count++;
+    //   } else {
+    //     res.status(422).json({ error: "The connection has timed out" })
+    //   }
+
+    //   if (finalRes.armor[0] !== 'empty' &&
+    //     finalRes.armoraddons[0] !== 'empty' &&
+    //     finalRes.armoraddons[0] !== 'empty') {
+    //     ready = true;
+    //     res.json(finalRes)
+    //   }
+    // }
