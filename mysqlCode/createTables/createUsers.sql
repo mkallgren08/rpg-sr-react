@@ -9,11 +9,11 @@ create table if not exists Users (
   user_about varchar(200)
 );
 
-alter table USERS
+alter table Users
 add constraint unique_email unique key(user_email);
 
-alter table USERS
+alter table Users
 add column newuser int after user_about;
 
-use crhdybcsctttyd85;
-rename table USERS to Users;
+-- use crhdybcsctttyd85;
+-- rename table Users to Users;
