@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 module.exports = {
   findAll: function (req, res) {
-    db.TestData
+    db.User
       .find(req.query)
       .sort({ name: -1 })
       .then(dbModel => res.json(dbModel))
