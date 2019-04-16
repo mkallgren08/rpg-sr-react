@@ -1,5 +1,5 @@
 use crhdybcsctttyd85;
-create table if not exists RACES(
+create table if not exists Races(
   race_id varchar(36) not null primary key,
   min_bod int not null,
     max_bod int not null,
@@ -21,12 +21,17 @@ create table if not exists RACES(
     max_edg int not null,
   essence int not null,
   initiative varchar(20) not null,
-  trait_ids json not null,
-  trait_names json not null        
+  traits json        
 );
 
-alter table RACES
+alter table Races
 add column race_name varchar(36) after race_id;
 
-alter table RACES
+alter table Races
 add constraint unique_name unique key(race_name);
+
+-- insert into Races (UUID(),min_bod,max_bod,min_agi,max_agi,min_rea,max_rea,
+--   min_str,max_str,min_wil,max_wil,min_int,max_int,min_cha,max_cha,
+--   min_edg,max_edg,essence,initiative)
+
+select * from Races;

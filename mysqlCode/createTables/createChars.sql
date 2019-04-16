@@ -1,5 +1,5 @@
 use crhdybcsctttyd85;
-create table if not exists CHARS (
+create table if not exists Chars (
   char_id varchar(36) not null primary key,
   char_name varchar(36) not null,
   char_height varchar(10),
@@ -14,10 +14,10 @@ create table if not exists CHARS (
   char_misc JSON,
   char_userid varchar(36) not null,
   foreign key(char_userid)
-    references USERS (user_id)
+    references Users (user_id)
 );
 
-alter table CHARS
+alter table Chars
 add column char_bod int after char_name,
 add column char_agi int after char_bod,
 add column char_rea int after char_agi,
