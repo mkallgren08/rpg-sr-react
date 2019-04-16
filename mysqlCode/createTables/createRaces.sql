@@ -34,4 +34,7 @@ add constraint unique_name unique key(race_name);
 --   min_str,max_str,min_wil,max_wil,min_int,max_int,min_cha,max_cha,
 --   min_edg,max_edg,essence,initiative)
 
+alter table Races
+modify column traits varchar(100);
+
 select * from Races;

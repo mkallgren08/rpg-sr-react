@@ -8,4 +8,4 @@ insert ignore into Bioware(
   (UUID(), 'Cat Eye', 0, 0, 0.1, '4', 4000, 0, ''),
   (UUID(), 'Pain Editor', 0, 0, 0.3, '18F', 48000, 1, '');
   
-select * from Bioware;
+select * from Races;

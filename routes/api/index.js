@@ -8,6 +8,7 @@ const armorAddOnRoutes = require("./armoraddons.js")
 const attrsRoutes = require("./attrs.js")
 const biowareRoutes = require('./bioware.js')
 const bundleRoutes = require("./bundles.js")
+const racesRoutes = require("./races.js")
 
 //  routes
 //router.use("/testdata", testdataRoutes);
@@ -22,6 +23,9 @@ router.use("/attrs", attrsRoutes)
 // 'b' Routes
 router.use('/bioware', biowareRoutes)
 router.use("/bundle", bundleRoutes)
+
+// 'r' Routes
+router.use("/races", racesRoutes)
 
 // 'u' Routes
 router.use("/users", usersRoutes)

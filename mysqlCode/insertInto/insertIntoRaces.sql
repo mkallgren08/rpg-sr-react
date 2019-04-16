@@ -11,5 +11,7 @@ insert ignore into Races
   
 select * from Races;
 
+update Races set traits='{"traits":[]}' where race_name='Human';
+update Races set traits='{"traits":["Low-Light Vision"]}' where race_name='Elf' or race_name='Orc';
 update Races set traits='{"traits":["Increased Lifestyle Cost; 20%", "+2 dice to pathogen and toxin resistance"]}' where race_name='Dwarf';
 update Races set traits='{"traits":["Increased Lifestyle Cost; 100%", "+2 dice to pathogen and toxin resistance"]}' where race_name='Troll';
