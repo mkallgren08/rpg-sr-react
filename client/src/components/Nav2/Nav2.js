@@ -104,7 +104,7 @@ class Nav2 extends Component {
 
     return (
       <Container fluid>
-        <SessionChecker auth = {this.props.auth}/>
+        <SessionChecker auth={this.props.auth} />
         <Navbar fluid>
           <Row>
             <Col size="md-4">
@@ -139,6 +139,18 @@ class Nav2 extends Component {
                       onClick={this.goTo.bind(this, 'createProfile', profile)}
                     >
                       Create Profile
+                  </Button>
+                  )
+                }
+                {
+                  isAuthenticated() && (
+                    <Button
+                      id="qsLogoutBtn"
+                      bsStyle="primary"
+                      className="btn-margin"
+                      onClick={this.goTo.bind(this, 'characterPage', {})}
+                    >
+                      Character Page (temporary fixed link)
                   </Button>
                   )
                 }

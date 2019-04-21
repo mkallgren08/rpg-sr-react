@@ -109,7 +109,7 @@ export default class Auth {
     // Set the time that the access token will expire at
     // Default value is 7200 milliseconds - 7.2 seconds - multiply by 1000 to get 2 hours
     console.log('setting session')
-    let expiresAt = JSON.stringify((authResult.expiresIn*20) + new Date().getTime());
+    let expiresAt = JSON.stringify((authResult.expiresIn*1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);

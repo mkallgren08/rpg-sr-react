@@ -40,4 +40,11 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+console.log(`Testing to see if models are available (should be something other than undefined): ${db.Ammo}`)
+
+// Model/Table Relations
+db.User.hasMany(db.CharacterBase)
+db.CharacterBase.belongsTo(db.User)
+
+
 module.exports = db;

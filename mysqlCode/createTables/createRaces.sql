@@ -30,11 +30,10 @@ add column race_name varchar(36) after race_id;
 alter table Races
 add constraint unique_name unique key(race_name);
 
+
+
 -- insert into Races (UUID(),min_bod,max_bod,min_agi,max_agi,min_rea,max_rea,
 --   min_str,max_str,min_wil,max_wil,min_int,max_int,min_cha,max_cha,
 --   min_edg,max_edg,essence,initiative)
-
-alter table Races
-modify column traits varchar(100);
 
 select * from Races;
