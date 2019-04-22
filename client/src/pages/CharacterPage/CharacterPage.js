@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import API from '../../utils/API';
+// import API from '../../utils/API';
 import {Container} from '../../components/Grid';
 import Nav2 from '../../components/Nav2'
+import devChar from '../../utils/dummyData/sampleChar'
 
 class CharacterPage extends Component {
   state = {
@@ -10,10 +11,14 @@ class CharacterPage extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      character: devChar
+    }
+
   };
 
   componentDidMount(){
-
+    console.log(devChar)
   };
 
   handleInputChange = event => {

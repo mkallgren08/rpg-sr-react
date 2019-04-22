@@ -53,8 +53,8 @@ export default class Auth {
       scope: 'openid profile email' //*Need to include 'email' to get user email address!
     });
 
-    console.log(env, redirectUri)
-    console.log(newAuth0)
+    // console.log(env, redirectUri)
+    // console.log(newAuth0)
 
     return newAuth0
   }
@@ -70,7 +70,7 @@ export default class Auth {
 
   getPrevLocation(){
     let prevLoc = localStorage.getItem('sr_track_prevLoc');
-    console.log(prevLoc);
+    // console.log(prevLoc);
     return prevLoc
   }
 
@@ -124,7 +124,7 @@ export default class Auth {
   // Moved this function into the navbar since the navbar will be present on every page
   checkCurrentSession(renewFunc){
     //console.log(renewFunc)
-    let timeLeft = parseInt(localStorage.getItem('expires_at')) - new Date().getTime();
+    let timeLeft = parseInt(localStorage.getItem('expires_at'), 10) - new Date().getTime();
     if(timeLeft <= 0 || isNaN(timeLeft)){
       console.log('Should logout')
       //this.logout();

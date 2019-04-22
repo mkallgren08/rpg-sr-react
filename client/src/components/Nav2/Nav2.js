@@ -23,11 +23,11 @@ class Nav2 extends Component {
     nearTimeout: false
   }
 
-  constructor(props) {
-    super(props);
-    //this.getPrevLocation();
-    //this.checkCurrentSession = this.checkCurrentSession.bind(this)
-  }
+  // constructor(props) {
+  //   super(props);
+  //   //this.getPrevLocation();
+  //   //this.checkCurrentSession = this.checkCurrentSession.bind(this)
+  // }
 
   componentDidMount() {
     this.setCurrentLocation();
@@ -60,19 +60,21 @@ class Nav2 extends Component {
     // the next page navigation can refer to the *current page
     // as the previous one)
     localStorage.setItem('sr_track_prevLoc', curLoc);
-    console.log(curLoc)
+    // console.log(curLoc)
   }
 
   getUser(email) {
     API.getUser(email).then(
       res => {
-        console.log(res.data)
+        //console.log(res.data)
         if (res.data.length === 0) {
           console.log("No user found; should route to createProfile page...")
           this.goTo('createProfile', this.state.profile)
         } else {
           console.log('user found! loading their profile into the state')
-          this.setState({ profile: res.data[0] }, () => console.log(this.state.profile))
+          // Loads the user profile into the state, then console.logs it to check (not needed for dev)
+          // this.setState({ profile: res.data[0] }, () => console.log(this.state.profile))
+          this.setState({ profile: res.data[0] })
         }
       }
     )
@@ -82,7 +84,7 @@ class Nav2 extends Component {
     const { userProfile, getProfile, isAuthenticated } = this.props.auth;
     if (isAuthenticated()) {
       if (!userProfile) {
-        console.log('need to load Auth0 profile')
+        // console.log('need to load Auth0 profile')
         getProfile((err, profile) => {
           this.setState({ profile: profile }, () => {
             this.getUser(this.state.profile.email)
