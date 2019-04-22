@@ -28,5 +28,17 @@ add column char_int int after char_log,
 add column char_cha int after char_int,
 add column char_edg int after char_cha,
 add column char_essence float after char_edg,
+add column char_mag int after char_essence,
+add column char_res int after char_mag,
 add column char_init json after char_essence;
 -- Note: remeber that there are three types of inits - basic, matrix, and astral. It will be easier to store these as a JSON object to pull values from
+
+alter table Chars
+add column char_mag int after char_essence,
+add column char_res int after char_mag;
+
+alter table Chars change column `char_race` `char_race_id` varchar(36) not null;
+alter table Chars change column `char_userid` `user_id` varchar(36) not null;
+alter table Chars change column `char_race_id` `race_id` varchar(36) not null;
+
+select * from Chars;

@@ -2,8 +2,8 @@
 
 // let User = sequelize.import(path.join(__dirname, "./user.js"));
 
-let CharacterBase = require("./characterbase.js")
-let SkillBase = require('./skillbase.js')
+//let CharacterBase = require("./chars.js")
+//let SkillBase = require('./skillbase.js')
 
 module.exports = function(sequelize, Sequelize) {
  
@@ -23,19 +23,19 @@ module.exports = function(sequelize, Sequelize) {
 
   });
 
-  CharacterSkill.associate = function (models) {
-    models.CharacterSkill.belongsTo(models.CharacterBase, {
-      onDelete: "CASCADE",
-      foreignKey: {
-        allowNull: false
-      }
-    });
-    models.CharacterSkill.hasOne(models.SkillBase, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-  };
+  // CharacterSkill.associate = function (models) {
+  //   models.CharacterSkill.belongsTo(models.CharacterBase, {
+  //     onDelete: "CASCADE",
+  //     foreignKey: {
+  //       allowNull: false
+  //     }
+  //   });
+  //   models.CharacterSkill.hasOne(models.SkillBase, {
+  //     foreignKey: {
+  //       allowNull: false
+  //     }
+  //   });
+  // };
 
   return CharacterSkill;
 

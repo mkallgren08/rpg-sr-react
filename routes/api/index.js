@@ -9,6 +9,7 @@ const attrsRoutes = require("./attrs.js")
 const biowareRoutes = require('./bioware.js')
 const bundleRoutes = require("./bundles.js")
 const racesRoutes = require("./races.js")
+const charRoutes = require("./charmanagement.js")
 
 //  routes
 //router.use("/testdata", testdataRoutes);
@@ -23,6 +24,9 @@ router.use("/attrs", attrsRoutes)
 // 'b' Routes
 router.use('/bioware', biowareRoutes)
 router.use("/bundle", bundleRoutes)
+
+// 'c' Routes
+router.use('/chars', charRoutes)
 
 // 'r' Routes
 router.use("/races", racesRoutes)

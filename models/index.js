@@ -43,8 +43,13 @@ db.Sequelize = Sequelize;
 console.log(`Testing to see if models are available (should be something other than undefined): ${db.Ammo}`)
 
 // Model/Table Relations
-db.User.hasMany(db.CharacterBase)
-db.CharacterBase.belongsTo(db.User)
 
+// User-to-Character
+db.User.hasMany(db.Char, {foreignKey:'char_id'})
+db.Char.belongsTo(db.User, {foreignKey:'user_id'})
+
+// Race-to-Character
+db.Race.hasMany(db.Char, {foreignKey:'char_id'})
+db.Char.belongsTo(db.Race, {foreignKey:'race_id'})
 
 module.exports = db;
