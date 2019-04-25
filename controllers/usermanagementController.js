@@ -22,19 +22,19 @@ module.exports = {
   //     .then(dbModel => res.json(dbModel))
   //     .catch(err => res.status(422).json(err));
   // },
-  create: function (req, res) {
+  createUser: function (req, res) {
     console.log(req.body)
     db.User
       .create(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  // update: function (req, res) {
-  //   db.TestData
-  //     .findOneAndUpdate({ _id: req.params.id }, req.body)
-  //     .then(dbModel => res.json(dbModel))
-  //     .catch(err => res.status(422).json(err));
-  // },
+  updateUser: function (req, res) {
+    db.User
+      .update(req.body, {where: {user_email:req.body.user_email}})
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
   // remove: function (req, res) {
   //   db.TestData
   //     .findByPk({ _id: req.params.id })

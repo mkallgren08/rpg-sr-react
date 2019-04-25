@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 // import Jumbotron from "../../components/Jumbotron";
-import API from "../../utils/API";
+import userAPI from "../../utils/apiRoutes/usersAPI";
 // import DeleteBtn from "../../components/DeleteBtn";
 //import { Button, Glyphicon, Navbar } from "react-bootstrap";
 import {Container } from "../../components/Grid";
@@ -43,7 +43,7 @@ class CreateProfile extends Component {
       <Container fluid>
         <Nav2 auth = {this.props.auth} />
         <h1>CREATE PROFILE PAGE</h1>
-        <CreateProfileForm profile={profile} API = {API} auth={this.props.auth}/>
+        <CreateProfileForm profile={profile} create={true} API = {userAPI} auth={this.props.auth}/>
       </Container>
       
     )

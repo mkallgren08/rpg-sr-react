@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Button } from 'react-bootstrap';
-import API from "../../utils/API";
+import userAPI from "../../utils/apiRoutes/usersAPI";
 //import Callback from '../../Callback/Callback.js';
 import history from '../../history.js';
 import SessionChecker from '../../Auth/SessionChecker';
@@ -64,17 +64,17 @@ class Nav2 extends Component {
   }
 
   getUser(email) {
-    API.getUser(email).then(
+    userAPI.getUser(email).then(
       res => {
         //console.log(res.data)
         if (res.data.length === 0) {
           console.log("No user found; should route to createProfile page...")
-          this.goTo('createProfile', this.state.profile)
+          this.goTo('createProfile', {profile:this.state.profile,create:true})
         } else {
           console.log('user found! loading their profile into the state')
           // Loads the user profile into the state, then console.logs it to check (not needed for dev)
           // this.setState({ profile: res.data[0] }, () => console.log(this.state.profile))
-          this.setState({ profile: res.data[0] })
+          this.setState({ profile: res.data[0]})
         }
       }
     )
@@ -138,7 +138,7 @@ class Nav2 extends Component {
                     <Button
                       bsStyle="primary"
                       className="btn-margin"
-                      onClick={this.goTo.bind(this, 'createProfile', profile)}
+                      onClick={this.goTo.bind(this, 'createProfile', {profile:profile, create: false})}
                     >
                       Create Profile
                   </Button>

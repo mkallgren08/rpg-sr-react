@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Labelled, TextArea, FormBtn } from "../Form";
 import { Container } from "../Grid";
-
+import history from '../../history.js';
 
 //import {FormGroup} from "../Form/FormGroup";
 // import {TextArea} from "../Form"
@@ -11,7 +11,9 @@ import "./CreateProfileForm.css"
 class CreateProfileForm extends Component {
   constructor(props) {
     super(props);
+    console.log(props)
     console.log(props.profile)
+    console.log(props.create)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleClose = this.handleClose.bind(this)
 
@@ -115,12 +117,18 @@ class CreateProfileForm extends Component {
 
   validateEntries () {
     let st=this.state;
-    if(st.firstname !== '' && st.lastname !== '' 
+    //console.log(st)
+    if(st.firstname !== '' && st.firstname && st.lastname !== '' && st.lastname
        && st.emailCheck && st.nickname !=='' 
-       && (st.email === this.props.profile.email || st.email === this.props.profile.user_email)){
+       && (st.email === this.props.profile.profile.email || st.email === this.props.profile.profile.user_email)){
          console.log('entries are valid!')
         this.setState({validEntries:true})
-    } else {this.setState({validEntries:false})}
+    } else {this.setState({validEntries:false}, ()=>{
+      // let res =[];
+      // if (st.firstname === ''){ res.push('firstname')}
+      // if (st.lastname ===''){res.push('lastname')}
+      // if(st.nickname){}
+    })}
   }
 
   handleInputChange = event => {
@@ -154,14 +162,28 @@ class CreateProfileForm extends Component {
     }
 
     console.log(packet);
-    if(this.props.create){
+    if(this.props.profile.create){
+      console.log('Creating new user...')
       this.props.API.createUser(packet).then(
-        res => {
+        (res, err) => {
+          if (err) throw err;
           console.log(res)
+          history.replace('/home',{})
         }
       )
     } else {
       // future code for submitting a profile edit
+      console.log(`Editing user ${this.state.email}`)
+      this.props.API.updateUser(packet).then(
+        res => {
+          console.log(res)
+          if (res.status !== 200){
+            alert('There was a problem with your update; please check the console for more details')
+          } else {
+            history.replace('/home',{})
+          }
+        }
+      )
     }
   
   };
@@ -179,7 +201,7 @@ class CreateProfileForm extends Component {
     return (
       <Container fluid>
         <form>
-          <button onClick={this.props.auth.renewSession.bind(this)}>Test session recheck</button>
+          {/* <button onClick={this.props.auth.renewSession.bind(this)}>Test session recheck</button> */}
           <div className="form-group">
             <Labelled
               id="email"

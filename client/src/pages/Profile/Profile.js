@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Panel, ControlLabel, Glyphicon } from 'react-bootstrap';
 import './Profile.css';
 import Nav2 from "../../components/Nav2";
+import history from '../../history.js';
 // import { Container } from '../../components/Grid/index';
 import {Row, Container } from "../../components/Grid";
 //import { List, ListItem } from "../../components/List";
@@ -18,6 +19,12 @@ class Profile extends Component {
       this.setState({ profile: userProfile });
     }
   }
+
+  goTo(route,state){
+    console.log('Route triggered from profile page!')
+    history.replace(`${route}`, state)
+  }
+
   render() {
     const { profile } = this.state;
     return (
@@ -35,6 +42,7 @@ class Profile extends Component {
                   <ControlLabel><Glyphicon glyph="user" /> Nickname</ControlLabel>
                   <h3>{profile.nickname}</h3>
                 </div>
+                <button onClick={this.goTo.bind(this,'createProfile',{profile:profile, create: false})}>Edit Profile</button>
                 <pre>{JSON.stringify(profile, null, 2)}</pre>
               </Panel>
             </div>

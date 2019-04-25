@@ -9,7 +9,8 @@ router.route("/:email")
 
 // Matches with "/api/users/"
 router.route("/")
-  .post(userController.create)
+  .post(userController.createUser)
+  .put(userController.updateUser)
 
 //Matches with "/api/users/:id"
 module.exports = router;
