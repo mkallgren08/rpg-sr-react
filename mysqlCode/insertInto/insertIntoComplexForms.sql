@@ -5,5 +5,5 @@ insert ignore into ComplexForms (
   comForm_dur , comForm_testType, comForm_test, comForm_desc
 ) values (
   UUID(), 'Cleaner', 'Persona', 'L+1', 'P', 'Simple', 'Software + Res (Level)',
-  ''
+  'Make a Simple Software + Resonance [Level] test. For each hit, reduce the Overwatch Score of the target by 1.'
 )

@@ -10,6 +10,9 @@ const biowareRoutes = require('./bioware.js')
 const bundleRoutes = require("./bundles.js")
 const racesRoutes = require("./races.js")
 const charRoutes = require("./charmanagement.js")
+const credstickRoutes = require("./credstick.js")
+const cyberwareRoutes = require("./cyberware.js")
+const droneAndVehicleRoutes = require("./dronesAndVehicles.js")
 
 //  routes
 //router.use("/testdata", testdataRoutes);
@@ -27,6 +30,11 @@ router.use("/bundle", bundleRoutes)
 
 // 'c' Routes
 router.use('/chars', charRoutes)
+router.use('/credsticks', credstickRoutes)
+router.use('/cyberware',cyberwareRoutes)
+
+// 'd' Routes
+router.use('/droveh', droneAndVehicleRoutes)
 
 // 'r' Routes
 router.use("/races", racesRoutes)
